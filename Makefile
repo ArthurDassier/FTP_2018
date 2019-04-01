@@ -13,9 +13,9 @@ CFLAGS	+=	-Wall -Wextra
 
 CFLAGS	+=	-I./include
 
-NAME	=	server
+NAME	=	myftp
 
-SRCS	=	srcs/server.c		\
+SRCS	=	srcs/server/server.c	\
 
 OBJS	=	$(SRCS:.c=.o)
 

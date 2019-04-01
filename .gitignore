@@ -2,3 +2,5 @@ norminette.py
 *.o
 *.a
 .vscode
+myftp
+a.out

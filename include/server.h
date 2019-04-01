@@ -21,8 +21,8 @@
 #define SOCKET_ERROR -1
 #define PORT 1025
 
-typedef int SOCKET;
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
+typedef int SOCKET;
 
 #endif /* !SERVER_H_ */
