@@ -1,0 +1,4 @@
+norminette.py
+*.o
+*.a
+.vscode
