@@ -1,8 +1,8 @@
 /*
 ** EPITECH PROJECT, 2019
-** server.c
+** init.c
 ** File description:
-** server
+** init
 */
 
 #include "server.h"
@@ -37,25 +37,4 @@ SOCKET init_socket(int port)
         return (84);
     }
     return (sock);
-}
-
-int main(void)
-{
-    SOCKADDR_IN     csin;
-    SOCKET          csock;
-    socklen_t       crecsize = sizeof(csin);
-    SOCKET          sock = init_socket(PORT);
-    char            *tmp = malloc(sizeof(char) * 14);
-
-    if (sock == 84)
-        return (84);
-    while (42) {
-        csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
-        write(csock, "Hello World!\n", 13);
-        read(csock, tmp, 13);
-        printf("%s", tmp);
-    }
-    close(csock);
-    close(sock);
-    return (0);
 }

@@ -15,7 +15,13 @@ CFLAGS	+=	-I./include
 
 NAME	=	myftp
 
-SRCS	=	srcs/server/server.c	\
+SRCS	=	srcs/server.c				\
+			srcs/help.c					\
+			srcs/init.c					\
+			srcs/reply.c				\
+			srcs/utils.c				\
+			srcs/user.c					\
+			srcs/my_str_to_wordtab.c	\
 
 OBJS	=	$(SRCS:.c=.o)
 
