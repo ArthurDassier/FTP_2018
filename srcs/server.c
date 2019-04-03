@@ -14,34 +14,43 @@ t_cmd cmd_table[CMD_LEN] =
     {"PASS", &password}
 };
 
-int found_cmd(char *tmp, SOCKET sock, SOCKET csock)
+char *clean_cmd(char **cmd, char *tmp)
 {
-    (void)  sock;
-    size_t  i = 0;
-    int     size = 0;
-    char    **cmd;
+    free (cmd);
+    for (size_t i = 0; tmp[i] != '\0'; ++i)
+        tmp[i] = '\0';
+    return (tmp);
+}
 
+int found_cmd(char *tmp, SOCKET csock)
+{
+    int     size = 0;
+    int     i = 0;
+    char    **cmd = NULL;
+    t_infos *infos = init_struct(csock);
+
+    if (infos == NULL)
+        return (84);
     while ((size = read(csock, tmp, 2000))) {
         if (size == -1)
             exit(0);
         tmp[size - 1] = '\0';
         cmd = my_str_to_wordtab(tmp);
-        for (; i < CMD_LEN; ++i) {
+        for (i = 0; i < CMD_LEN; ++i) {
             if (strcmp(cmd[0], cmd_table[i].cmd) == 0) {
-                cmd_table[i].pointer(csock, cmd);
+                cmd_table[i].pointer(infos, cmd);
                 break;
             }
         }
         if (strcmp(tmp, "QUIT") == 0) {
             free(cmd);
             free(tmp);
+            free(infos);
             close(csock);
             return (1);
         } else if (i == CMD_LEN)
             send_reply(csock, 500);
-        for (size_t i = 0; i < 2000; ++i)
-            tmp[i] = '\0';
-        free (cmd);
+        tmp = clean_cmd(cmd, tmp);
     }
     return (0);
 }
@@ -54,7 +63,7 @@ int loop(int port)
     SOCKET          sock = init_socket(port);
     char            *tmp = malloc(sizeof(char) * 2000);
 
-    if (sock == 84)
+    if (sock == 84 || tmp == NULL)
         return (84);
     while (42) {
         csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
@@ -62,7 +71,7 @@ int loop(int port)
             break;
         if (fork() == 0) {
             send_reply(csock, 220);
-            found_cmd(tmp, sock, csock);
+            found_cmd(tmp, csock);
             return (0);
         }
     }

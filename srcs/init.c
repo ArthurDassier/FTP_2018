@@ -7,6 +7,18 @@
 
 #include "server.h"
 
+t_infos *init_struct(SOCKET csock)
+{
+    t_infos *infos = malloc(sizeof(t_infos));
+
+    if (infos == NULL)
+        return (NULL);
+    infos->csock = csock;
+    infos->user = false;
+    infos->pwd = false;
+    return (infos);
+}
+
 SOCKADDR_IN init_sock_addr(int port)
 {
     SOCKADDR_IN     sin;

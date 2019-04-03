@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
 
 typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
@@ -28,18 +29,33 @@ typedef int SOCKET;
 SOCKADDR_IN init_sock_addr(int);
 SOCKET init_socket(int);
 
+enum user_state
+{
+    NOT_LOGGED,
+    UNKNOW,
+    KNOW
+};
+
+typedef struct s_infos
+{
+    SOCKET     csock;
+    int        user;
+    bool       pwd;
+}              t_infos;
+
 typedef struct s_cmd
 {
     char *cmd;
-    void (*pointer)(SOCKET, char **);
+    void (*pointer)(t_infos *, char **);
 }              t_cmd;
 
 typedef struct s_reply
 {
-    int code;
+    int  code;
     char *reply;
 }              t_reply;
 
+t_infos *init_struct(SOCKET);
 void send_reply(SOCKET, int);
 char **my_str_to_wordtab(char *);
 
@@ -47,8 +63,8 @@ char **my_str_to_wordtab(char *);
 int error_handling(int, char **);
 
 // Commands
-void help(SOCKET, char **);
-void user(SOCKET, char **);
-void password(SOCKET, char **);
+void help(t_infos *, char **);
+void user(t_infos *, char **);
+void password(t_infos *, char **);
 
 #endif /* !SERVER_H_ */
