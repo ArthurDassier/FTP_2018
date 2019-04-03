@@ -11,7 +11,11 @@ t_cmd cmd_table[CMD_LEN] =
 {
     {"HELP", &help},
     {"USER", &user},
-    {"PASS", &password}
+    {"PASS", &password},
+    {"NOOP", &noop},
+    {"PWD", &pwd},
+    {"CDUP", &cdup},
+    {"CWD", &cwd}
 };
 
 char *clean_cmd(char **cmd, char *tmp)
@@ -22,12 +26,12 @@ char *clean_cmd(char **cmd, char *tmp)
     return (tmp);
 }
 
-int found_cmd(char *tmp, SOCKET csock)
+int found_cmd(char *tmp, SOCKET csock, char *home)
 {
     int     size = 0;
     int     i = 0;
     char    **cmd = NULL;
-    t_infos *infos = init_struct(csock);
+    t_infos *infos = init_struct(csock, home);
 
     if (infos == NULL)
         return (84);
@@ -55,12 +59,12 @@ int found_cmd(char *tmp, SOCKET csock)
     return (0);
 }
 
-int loop(int port)
+int loop(char **av)
 {
     SOCKADDR_IN     csin;
     SOCKET          csock;
     socklen_t       crecsize = sizeof(csin);
-    SOCKET          sock = init_socket(port);
+    SOCKET          sock = init_socket(atoi(av[1]));
     char            *tmp = malloc(sizeof(char) * 2000);
 
     if (sock == 84 || tmp == NULL)
@@ -71,7 +75,7 @@ int loop(int port)
             break;
         if (fork() == 0) {
             send_reply(csock, 220);
-            found_cmd(tmp, csock);
+            found_cmd(tmp, csock, av[2]);
             return (0);
         }
     }
@@ -87,5 +91,5 @@ int main(int ac, char **av)
     else if (err)
         return (0);
     else
-        return (loop(atoi(av[1])));
+        return (loop(av));
 }

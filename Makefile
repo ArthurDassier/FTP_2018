@@ -17,6 +17,7 @@ NAME	=	myftp
 
 SRCS	=	srcs/server.c				\
 			srcs/help.c					\
+			srcs/commands.c				\
 			srcs/init.c					\
 			srcs/reply.c				\
 			srcs/utils.c				\

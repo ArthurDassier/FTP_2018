@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-t_infos *init_struct(SOCKET csock)
+t_infos *init_struct(SOCKET csock, char *home)
 {
     t_infos *infos = malloc(sizeof(t_infos));
 
@@ -16,6 +16,7 @@ t_infos *init_struct(SOCKET csock)
     infos->csock = csock;
     infos->user = false;
     infos->pwd = false;
+    infos->home = strdup(home);
     return (infos);
 }
 

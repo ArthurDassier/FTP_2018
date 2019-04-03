@@ -24,7 +24,7 @@ typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
 typedef int SOCKET;
 
-#define CMD_LEN 3
+#define CMD_LEN 7
 
 SOCKADDR_IN init_sock_addr(int);
 SOCKET init_socket(int);
@@ -41,6 +41,7 @@ typedef struct s_infos
     SOCKET     csock;
     int        user;
     bool       pwd;
+    char       *home;
 }              t_infos;
 
 typedef struct s_cmd
@@ -55,7 +56,7 @@ typedef struct s_reply
     char *reply;
 }              t_reply;
 
-t_infos *init_struct(SOCKET);
+t_infos *init_struct(SOCKET, char *);
 void send_reply(SOCKET, int);
 char **my_str_to_wordtab(char *);
 
@@ -66,5 +67,9 @@ int error_handling(int, char **);
 void help(t_infos *, char **);
 void user(t_infos *, char **);
 void password(t_infos *, char **);
+void noop(t_infos *, char **);
+void pwd(t_infos *, char **);
+void cdup(t_infos *, char **);
+void cwd(t_infos *, char **);
 
 #endif /* !SERVER_H_ */
