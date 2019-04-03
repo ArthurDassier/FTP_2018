@@ -38,10 +38,11 @@ enum user_state
 
 typedef struct s_infos
 {
-    SOCKET     csock;
-    int        user;
-    bool       pwd;
-    char       *home;
+    SOCKET          csock;
+    int             user;
+    bool            pwd;
+    char           *home;
+    struct s_infos *next;
 }              t_infos;
 
 typedef struct s_cmd
@@ -56,7 +57,7 @@ typedef struct s_reply
     char *reply;
 }              t_reply;
 
-t_infos *init_struct(SOCKET, char *);
+int add_node(t_infos **, SOCKET, char *);
 void send_reply(SOCKET, int);
 char **my_str_to_wordtab(char *);
 
