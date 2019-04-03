@@ -15,12 +15,13 @@ CFLAGS	+=	-I./include
 
 NAME	=	myftp
 
-SRCS	=	srcs/server.c				\
+SRCS	=	srcs/main.c					\
+			srcs/utils.c				\
+			srcs/server.c				\
 			srcs/help.c					\
 			srcs/commands.c				\
 			srcs/init.c					\
 			srcs/reply.c				\
-			srcs/utils.c				\
 			srcs/user.c					\
 			srcs/my_str_to_wordtab.c	\
 

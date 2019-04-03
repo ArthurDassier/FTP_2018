@@ -7,44 +7,23 @@
 
 #include "server.h"
 
-static int print_help()
+int add_node(t_infos **basic, SOCKET csock, char *home)
 {
-    printf("USAGE: ./myftp port path\n");
-    printf("\tport is the port number on which the server socket listens\n");
-    printf("\tpath is the path to the home directory \
-    for the Anonymous user\n");
-    return (1);
-}
+    t_infos *infos = malloc(sizeof(t_infos));
+    t_infos *tmp = (*basic);
 
-static int print_help_error()
-{
-    fprintf(stderr, "USAGE: ./myftp port path\n");
-    fprintf(stderr, "\tport is the port number on which the server \
-    socket listens\n");
-    fprintf(stderr, "\tpath is the path to the home directory \
-    for the Anonymous user\n");
-    return (84);
-}
-
-int error_handling(int ac, char **av)
-{
-    if (ac == 2) {
-        if (strcmp(av[1], "-help") == 0)
-            return (print_help());
-        else
-            return (print_help_error());
-    }
-    if (ac != 3)
-        return (print_help_error());
-    for (size_t i = 0; i != strlen(av[1]); ++i) {
-        if (!isdigit(av[1][i])) {
-            fprintf(stderr, "%s: is not a correct port\n", av[1]);
-            return (84);
-        }
-    }
-    if (chdir(av[2]) == -1) {
-        fprintf(stderr, "%s: is not a correct path\n", av[2]);
+    if (infos == NULL)
         return (84);
-    }
+    infos->csock = csock;
+    infos->user = false;
+    infos->pwd = false;
+    infos->home = strdup(home);
+    infos->next = NULL;
+    if (tmp != NULL) {
+        while(tmp->next != NULL)
+            tmp = tmp->next;
+        tmp->next = infos;
+    } else
+        *basic = infos;
     return (0);
 }

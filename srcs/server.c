@@ -44,7 +44,7 @@ int exec_command(t_infos *infos)
     return (0);
 }
 
-int check_fd_is_set(t_infos **infos, fd_set read_fd_set)
+static int check_fd_is_set(t_infos **infos, fd_set read_fd_set)
 {
     t_infos *infos_tmp = (*infos);
 
@@ -55,7 +55,8 @@ int check_fd_is_set(t_infos **infos, fd_set read_fd_set)
     return (0);
 }
 
-int new_connection(SOCKET sock, t_infos **infos, fd_set *fdst, char *path)
+static int new_connection(SOCKET sock, t_infos **infos,
+fd_set *fdst, char *path)
 {
     SOCKET          csock;
     SOCKADDR_IN     csin;
@@ -69,7 +70,8 @@ int new_connection(SOCKET sock, t_infos **infos, fd_set *fdst, char *path)
     return (0);
 }
 
-int loop2(SOCKET sock, t_infos **infos, fd_set *active_fd_set, char *path)
+static int select_management(SOCKET sock, t_infos **infos,
+fd_set *active_fd_set, char *path)
 {
     fd_set read_fd_set = *active_fd_set;
 
@@ -97,20 +99,8 @@ int loop(char **av)
     if (sock == 84)
         return (84);
     while (42) {
-        if (loop2(sock, &infos, &active_fd_set, av[2]) == 84)
+        if (select_management(sock, &infos, &active_fd_set, av[2]) == 84)
             return (84);
     }
     return (0);
-}
-
-int main(int ac, char **av)
-{
-    int err = error_handling(ac, av);
-
-    if (err == 84)
-        return (84);
-    else if (err)
-        return (0);
-    else
-        return (loop(av));
 }

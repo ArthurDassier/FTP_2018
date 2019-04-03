@@ -26,9 +26,6 @@ typedef int SOCKET;
 
 #define CMD_LEN 7
 
-SOCKADDR_IN init_sock_addr(int);
-SOCKET init_socket(int);
-
 enum user_state
 {
     NOT_LOGGED,
@@ -57,20 +54,21 @@ typedef struct s_reply
     char *reply;
 }              t_reply;
 
-int add_node(t_infos **, SOCKET, char *);
-void send_reply(SOCKET, int);
 char **my_str_to_wordtab(char *);
+void send_reply(SOCKET, int);
+SOCKET init_socket(int);
+int loop(char **);
 
 // Utils
-int error_handling(int, char **);
+int add_node(t_infos **, SOCKET, char *);
 
 // Commands
+void password(t_infos *, char **);
 void help(t_infos *, char **);
 void user(t_infos *, char **);
-void password(t_infos *, char **);
 void noop(t_infos *, char **);
-void pwd(t_infos *, char **);
 void cdup(t_infos *, char **);
+void pwd(t_infos *, char **);
 void cwd(t_infos *, char **);
 
 #endif /* !SERVER_H_ */
