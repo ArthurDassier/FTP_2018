@@ -24,10 +24,8 @@ int add_node(t_infos **basic, SOCKET csock, SOCKADDR_IN csin, char *home)
         while(tmp->next != NULL)
             tmp = tmp->next;
         tmp->next = infos;
-    } else {
-        printf("OUI\n");
+    } else
         *basic = infos;
-    }
     return (0);
 }
 
