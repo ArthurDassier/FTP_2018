@@ -72,6 +72,7 @@ int loop(char **);
 // Utils
 int add_node(t_infos **, SOCKET, SOCKADDR_IN, char *);
 int delete_node(t_infos **, t_infos *, fd_set *);
+char *to_up(char *);
 
 // Commands
 void password(t_infos *, char **);

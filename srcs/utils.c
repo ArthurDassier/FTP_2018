@@ -47,3 +47,14 @@ int delete_node(t_infos **infos, t_infos *to_delete, fd_set *active_fd_set)
     free(to_delete);
     return (0);
 }
+
+char *to_up(char *to_up)
+{
+    int i = 0;
+
+    while (to_up[i] != '\0') {
+        to_up[i] = toupper(to_up[i]);
+        ++i;
+    }
+    return (to_up);
+}

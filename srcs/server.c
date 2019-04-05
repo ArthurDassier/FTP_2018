@@ -35,6 +35,7 @@ int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
         return (84);
     command[size - 1] = '\0';
     tab_cmd = my_str_to_wordtab(command);
+    tab_cmd[0] = to_up(tab_cmd[0]);
     for (i = 0; i < CMD_LEN; ++i) {
         if (strcmp(tab_cmd[0], cmd_table[i].cmd) == 0) {
             cmd_table[i].pointer(infos, tab_cmd);
