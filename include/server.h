@@ -24,7 +24,7 @@ typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
 typedef int SOCKET;
 
-#define CMD_LEN 7
+#define CMD_LEN 8
 
 enum user_state
 {
@@ -33,13 +33,23 @@ enum user_state
     KNOW
 };
 
+enum state
+{
+    NORMAL,
+    PASSIVE,
+    ACTIVE
+};
+
 typedef struct s_infos
 {
     SOCKET          csock;
+    SOCKET          psock;
+    SOCKADDR_IN     csin;
     int             user;
     bool            pwd;
     char           *home;
     struct s_infos *next;
+    int            state;
 }              t_infos;
 
 typedef struct s_cmd
@@ -60,7 +70,8 @@ SOCKET init_socket(int);
 int loop(char **);
 
 // Utils
-int add_node(t_infos **, SOCKET, char *);
+int add_node(t_infos **, SOCKET, SOCKADDR_IN, char *);
+int delete_node(t_infos **, t_infos *, fd_set *);
 
 // Commands
 void password(t_infos *, char **);
@@ -70,5 +81,6 @@ void noop(t_infos *, char **);
 void cdup(t_infos *, char **);
 void pwd(t_infos *, char **);
 void cwd(t_infos *, char **);
+void pasv(t_infos *, char **);
 
 #endif /* !SERVER_H_ */

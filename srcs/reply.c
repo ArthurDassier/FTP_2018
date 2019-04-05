@@ -37,7 +37,7 @@ void send_reply(SOCKET csock, int code)
 {
     for (int i = 0; i != 22; ++i) {
         if (code == replies_tab[i].code) {
-            dprintf(csock, "%d %s\n", replies_tab[i].code,
+            dprintf(csock, "%d %s", replies_tab[i].code,
             replies_tab[i].reply);
         }
     }
