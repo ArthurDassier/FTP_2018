@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-t_reply replies_tab[22] =
+static t_reply replies_tab[] =
 {
     {550, "File or directory doesn't exist.\r\n"},
     {530, "Please login with USER and PASS.\r\n"},
@@ -35,7 +35,7 @@ t_reply replies_tab[22] =
 
 void send_reply(SOCKET csock, int code)
 {
-    for (int i = 0; i != 22; ++i) {
+    for (int i = 0; i != ARRAY_SIZE(replies_tab); ++i) {
         if (code == replies_tab[i].code) {
             dprintf(csock, "%d %s", replies_tab[i].code,
             replies_tab[i].reply);

@@ -24,7 +24,7 @@ typedef struct sockaddr_in SOCKADDR_IN;
 typedef struct sockaddr SOCKADDR;
 typedef int SOCKET;
 
-#define CMD_LEN 8
+#define ARRAY_SIZE(array) sizeof(array) / sizeof(*array)
 
 enum user_state
 {

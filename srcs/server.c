@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-t_cmd cmd_table[CMD_LEN] =
+static t_cmd cmd_table[] =
 {
     {"HELP", &help},
     {"USER", &user},
@@ -37,7 +37,7 @@ int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
     || strcmp(command, "\n") == 0)
         return (0);
     tab_cmd = my_str_to_wordtab(command);
-    for (i = 0; i < CMD_LEN; ++i) {
+    for (i = 0; i < ARRAY_SIZE(cmd_table); ++i) {
         if (strncasecmp(tab_cmd[0], cmd_table[i].cmd, 4) == 0) {
             cmd_table[i].pointer(infos, tab_cmd);
             break;
@@ -47,7 +47,7 @@ int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
     //     if (delete_node(list, infos, active_fd_set) == 84)
     //         return (84);
     // } else
-    if (i == CMD_LEN)
+    if (i == ARRAY_SIZE(cmd_table))
         send_reply(infos->csock, 500);
     free(tab_cmd);
     for (int i = 0; i < 4096; ++i)

@@ -25,7 +25,7 @@ static int count_word(char *str)
     return (word);
 }
 
-char *clean_str(char *str)
+static char *clean_str(char *str)
 {
     char    *tmp = malloc(sizeof(char) * (strlen(str) + 1));
     int     j = 0;

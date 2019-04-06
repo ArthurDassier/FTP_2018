@@ -23,7 +23,7 @@ int add_node(t_infos **basic, SOCKET csock, SOCKADDR_IN csin, char *home)
     infos->construct = malloc(sizeof(char) * 20);
     infos->constru = 0;
     if (tmp != NULL) {
-        while(tmp->next != NULL)
+        while (tmp->next != NULL)
             tmp = tmp->next;
         tmp->next = infos;
     } else

@@ -33,7 +33,7 @@ static void passive_mode(t_infos *infos, __attribute__((unused)) char **cmd)
         return;
     if (bind(psock, (SOCKADDR*)&sin, recsize) == -1)
         return;
-    if (listen(psock, 5) == -1) 
+    if (listen(psock, 5) == -1)
         return;
     infos->psock = accept(psock, (SOCKADDR*)&sin, &recsize);
     server_reply(infos, ip, port1, port2);
