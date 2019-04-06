@@ -50,6 +50,8 @@ typedef struct s_infos
     char           *home;
     struct s_infos *next;
     int            state;
+    char            *construct;
+    size_t          constru;
 }              t_infos;
 
 typedef struct s_cmd
@@ -72,7 +74,6 @@ int loop(char **);
 // Utils
 int add_node(t_infos **, SOCKET, SOCKADDR_IN, char *);
 int delete_node(t_infos **, t_infos *, fd_set *);
-char *to_up(char *);
 
 // Commands
 void password(t_infos *, char **);

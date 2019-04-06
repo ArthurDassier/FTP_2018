@@ -33,11 +33,12 @@ int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
     size = read(infos->csock, command, 4096);
     if (size == -1)
         return (84);
-    command[size - 1] = '\0';
+    if (strcmp(command, "\r\n") == 0 || strcmp(command, "\r") == 0
+    || strcmp(command, "\n") == 0)
+        return (0);
     tab_cmd = my_str_to_wordtab(command);
-    tab_cmd[0] = to_up(tab_cmd[0]);
     for (i = 0; i < CMD_LEN; ++i) {
-        if (strcmp(tab_cmd[0], cmd_table[i].cmd) == 0) {
+        if (strncasecmp(tab_cmd[0], cmd_table[i].cmd, 4) == 0) {
             cmd_table[i].pointer(infos, tab_cmd);
             break;
         }
@@ -49,6 +50,8 @@ int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
     if (i == CMD_LEN)
         send_reply(infos->csock, 500);
     free(tab_cmd);
+    for (int i = 0; i < 4096; ++i)
+        command[i] = '\0';
     return (0);
 }
 

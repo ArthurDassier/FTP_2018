@@ -26,7 +26,7 @@ void user(t_infos *infos, char **cmd)
 
 void password(t_infos *infos, char **cmd)
 {
-    if (cmd[1] != NULL)
+    if (cmd[1] != NULL && strcmp(cmd[1], " ") != 0)
         send_reply(infos->csock, 504);
     else {
         if (infos->user == NOT_LOGGED) {

@@ -19,7 +19,7 @@ static void server_reply(t_infos *infos, char *ip, int port1, int port2)
     dprintf(infos->csock, ",%d,%d)\n", port1, port2);
 }
 
-static void passive_mode(t_infos *infos, char **cmd)
+static void passive_mode(t_infos *infos, __attribute__((unused)) char **cmd)
 {
     SOCKADDR_IN     sin = infos->csin;
     socklen_t       recsize = sizeof(sin);
@@ -39,7 +39,7 @@ static void passive_mode(t_infos *infos, char **cmd)
     server_reply(infos, ip, port1, port2);
 }
 
-void pasv(t_infos *infos, char **cmd)
+void pasv(t_infos *infos, __attribute__((unused)) char **cmd)
 {
     if (cmd[1] != NULL)
         send_reply(infos->csock, 504);

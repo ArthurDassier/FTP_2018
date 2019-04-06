@@ -20,6 +20,8 @@ int add_node(t_infos **basic, SOCKET csock, SOCKADDR_IN csin, char *home)
     infos->pwd = false;
     infos->home = strdup(home);
     infos->next = NULL;
+    infos->construct = malloc(sizeof(char) * 20);
+    infos->constru = 0;
     if (tmp != NULL) {
         while(tmp->next != NULL)
             tmp = tmp->next;
@@ -46,15 +48,4 @@ int delete_node(t_infos **infos, t_infos *to_delete, fd_set *active_fd_set)
     close(to_delete->csock);
     free(to_delete);
     return (0);
-}
-
-char *to_up(char *to_up)
-{
-    int i = 0;
-
-    while (to_up[i] != '\0') {
-        to_up[i] = toupper(to_up[i]);
-        ++i;
-    }
-    return (to_up);
 }
