@@ -7,44 +7,53 @@
 
 #include "server.h"
 
-static void help_two(SOCKET csock)
+static t_help help_table[] =
 {
-    dprintf(csock, "PWD  <CRLF>                   : \
-    Print working directory\n");
-    dprintf(csock, "PASV <CRLF>                   : \
-    Enable 'passive' mode for data transfer\n");
-    dprintf(csock, "PORT <SP> <host-port> <CRLF>  : \
-    Enable 'active' mode for data transfer\n");
-    dprintf(csock, "HELP [<SP> <string>] <CRLF>   : \
-    List available commands\n");
-    dprintf(csock, "NOOP <CRLF>                   : Do nothing\n");
-    dprintf(csock, "(the following are commands using data transfer )\n");
-    dprintf(csock, "RETR <SP> <pathname> <CRLF>   : \
-    Download file from server to client\n");
-    dprintf(csock, "STOR <SP> <pathname> <CRLF>   : \
-    Upload file from client to server\n");
-    dprintf(csock, "LIST [<SP> <pathname>] <CRLF> : \
-    List files in the current working directory\n");
+    {"HELP", "List available commands"},
+    {"USER", "Specify user for authentication"},
+    {"PASS", "Specify password for authentication"},
+    {"NOOP", "Do nothing"},
+    {"PWD", "Print working directory"},
+    {"CDUP", "Change working directory to parent directory"},
+    {"CWD", "Change working directory to parent directory"},
+    {"PASV", "Enable \"passive\" mode for data transfer"},
+    {"QUIT", "Disconnection"},
+    {"PORT", "Enable \"active\" mode for data transfer"},
+    {"RETR", "Download file from server to client"},
+    {"STOR", "Upload file from client to server"},
+    {"LIST", "List files in the current working directory"},
+    {"DELE", "Delete file on the server"}
+};
+
+void help_two(t_infos *infos, char **cmd)
+{
+    dprintf(infos->csock, "214 ");
+    for (unsigned int i = 0; i < ARRAY_SIZE(help_table); ++i) {
+        if (strncasecmp(cmd[1], help_table[i].cmd, 4) == 0) {
+            dprintf(infos->csock, "%s : %s\r\n", help_table[i].cmd,
+                        help_table[i].msg);
+        }
+    }
 }
 
 void help(t_infos *infos, char **cmd)
 {
-    (void) cmd;
+    unsigned int i = 0;
+
     if (infos->user == NOT_LOGGED || infos->pwd == false) {
         send_reply(infos->csock, 530);
         return;
     }
-    dprintf(infos->csock, "USER <SP> <username> <CRLF>   : \
-    Specify user for authentication\n");
-    dprintf(infos->csock, "PASS <SP> <password> <CRLF>   : \
-    Specify password for authentication\n");
-    dprintf(infos->csock, "CWD  <SP> <pathname> <CRLF>   : \
-    Change working directory\n");
-    dprintf(infos->csock, "CDUP <CRLF>                   : \
-    Change working directory to parent directory\n");
-    dprintf(infos->csock, "QUIT <CRLF>                   : \
-    Disconnection\n");
-    dprintf(infos->csock, "DELE <SP> <pathname> <CRLF>   : \
-    Delete file on the server\n");
-    help_two(infos->csock);
+    if (cmd[1] == NULL) {
+        dprintf(infos->csock, "214 ");
+        for (i = 0; i < ARRAY_SIZE(help_table) - 1; ++i)
+            dprintf(infos->csock, "%s : %s\n", help_table[i].cmd,
+                    help_table[i].msg);
+        dprintf(infos->csock, "%s : %s\r\n", help_table[i].cmd,
+                help_table[i].msg);
+        return;
+    } else if (cmd[2] != NULL)
+        send_reply(infos->csock, 504);
+    else
+        help_two(infos, cmd);
 }

@@ -26,7 +26,7 @@ void pwd(t_infos *infos, char **cmd)
     else if (infos->user == NOT_LOGGED || infos->pwd == false)
         send_reply(infos->csock, 530);
     else
-        dprintf(infos->csock, "%s\n", getcwd(tmp, 200));
+        dprintf(infos->csock, "257 \"/%s\"\r\n", getcwd(tmp, 200));
 }
 
 void cdup(t_infos *infos, char **cmd)

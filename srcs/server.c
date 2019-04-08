@@ -16,15 +16,16 @@ static t_cmd cmd_table[] =
     {"PWD", &pwd},
     {"CDUP", &cdup},
     {"CWD", &cwd},
-    {"PASV", &pasv}
+    {"PASV", &pasv},
+    {"STOR", &stor}
 };
 
 int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
 {
-    char    **tab_cmd = NULL;
-    int     size = 0;
-    int     i = 0;
-    char    command[4096];
+    char            **tab_cmd = NULL;
+    int             size = 0;
+    unsigned int    i = 0;
+    char            command[4096];
 
     (void) list;
     (void) active_fd_set;

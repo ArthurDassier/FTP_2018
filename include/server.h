@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h>
@@ -54,6 +56,12 @@ typedef struct s_infos
     size_t          constru;
 }              t_infos;
 
+typedef struct s_help
+{
+    char *cmd;
+    char *msg;
+}              t_help;
+
 typedef struct s_cmd
 {
     char *cmd;
@@ -84,5 +92,6 @@ void cdup(t_infos *, char **);
 void pwd(t_infos *, char **);
 void cwd(t_infos *, char **);
 void pasv(t_infos *, char **);
+void stor(t_infos *, char **);
 
 #endif /* !SERVER_H_ */

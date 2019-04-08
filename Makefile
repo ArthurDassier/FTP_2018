@@ -24,6 +24,7 @@ SRCS	=	srcs/main.c					\
 			srcs/init.c					\
 			srcs/reply.c				\
 			srcs/user.c					\
+			srcs/stor.c					\
 			srcs/my_str_to_wordtab.c	\
 
 OBJS	=	$(SRCS:.c=.o)

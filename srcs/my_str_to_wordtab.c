@@ -57,7 +57,7 @@ char **my_str_to_wordtab(char *str)
     str = clean_str(str);
     tab[col] = malloc(sizeof(char) * (strlen(str) + 1));
     for (int i = 0; str[i] != '\0' && str[i] != '\r'; ++i) {
-        if (str[i] == ' ') {
+        if (str[i] == ' ' || str[i] == '\t') {
             tab[col][j] = '\0';
             ++col;
             j = 0;
