@@ -23,7 +23,7 @@ static reply_t replies_tab[] =
     {257, "\"PATHNAME\" created.\r\n"},
     {250, "Requested file action okay, completed.\r\n"},
     {230, "User logged in, proceed.\r\n"},
-    {227, "Entering Passive Mod ("},
+    {227, "Entering Passive Mode ("},
     {226, "Closing data connection.\r\n"},
     {221, "Service closing control connection.\r\n"},
     {220, "Service ready for new user.\r\n"},

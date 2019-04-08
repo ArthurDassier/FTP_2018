@@ -86,8 +86,11 @@ char **tab_cmd, fd_set *active_fd_set)
         if (delete_node(list, infos, active_fd_set) == 84)
             return (84);
         return (0);
+    } else if (i == ARRAY_SIZE(cmd_table)) {
+        if (infos->pwd == true)
+            send_reply(infos->csock, 500);
+        else
+            send_reply(infos->csock, 530);
     }
-    if (i == ARRAY_SIZE(cmd_table))
-        send_reply(infos->csock, 500);
     return (0);
 }

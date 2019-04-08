@@ -20,10 +20,13 @@ void stor_two(infos_t *infos, char **cmd)
     close(file_open);
     close(infos->psock);
     infos->state = NORMAL;
+    exit(0);
 }
 
 void stor(infos_t *infos, char **cmd)
 {
+    pid_t child_pid;
+
     if (infos->user == NOT_LOGGED || infos->pwd == false) {
         send_reply(infos->csock, 530);
         return;
@@ -36,5 +39,7 @@ void stor(infos_t *infos, char **cmd)
         send_reply(infos->csock, 504);
         return;
     }
-    stor_two(infos, cmd);
+    child_pid = fork();
+    if (child_pid == 0)
+        stor_two(infos, cmd);
 }

@@ -16,7 +16,7 @@ static void server_reply(infos_t *infos, char *ip, int port1, int port2)
             ip[i] = ',';
     }
     dprintf(infos->csock, "%s", ip);
-    dprintf(infos->csock, ",%d,%d)\n", port1, port2);
+    dprintf(infos->csock, ",%d,%d).\n", port1, port2);
 }
 
 static void passive_mode(infos_t *infos, __attribute__((unused)) char **cmd)
