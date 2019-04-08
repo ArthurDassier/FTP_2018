@@ -18,7 +18,8 @@ static cmd_t cmd_table[] =
     {"CWD", &cwd},
     {"PASV", &pasv},
     {"STOR", &stor},
-    {"LIST", &list}
+    {"LIST", &list},
+    {"RETR", &retr}
 };
 
 void noop(infos_t *infos, char **cmd)
