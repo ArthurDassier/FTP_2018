@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static t_help help_table[] =
+static help_t help_table[] =
 {
     {"HELP", "List available commands"},
     {"USER", "Specify user for authentication"},
@@ -25,7 +25,7 @@ static t_help help_table[] =
     {"DELE", "Delete file on the server"}
 };
 
-void help_two(t_infos *infos, char **cmd)
+static void help_two(infos_t *infos, char **cmd)
 {
     dprintf(infos->csock, "214 ");
     for (unsigned int i = 0; i < ARRAY_SIZE(help_table); ++i) {
@@ -36,7 +36,7 @@ void help_two(t_infos *infos, char **cmd)
     }
 }
 
-void help(t_infos *infos, char **cmd)
+void help(infos_t *infos, char **cmd)
 {
     unsigned int i = 0;
 

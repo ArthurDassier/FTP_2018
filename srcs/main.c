@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static int print_help()
+static int print_help(void)
 {
     printf("USAGE: ./myftp port path\n");
     printf("\tport is the port number on which the server socket listens\n");
@@ -16,7 +16,7 @@ static int print_help()
     return (1);
 }
 
-static int print_help_error()
+static int print_help_error(void)
 {
     fprintf(stderr, "USAGE: ./myftp port path\n");
     fprintf(stderr, "\tport is the port number on which the server \

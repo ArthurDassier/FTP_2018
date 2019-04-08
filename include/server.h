@@ -54,44 +54,46 @@ typedef struct s_infos
     int            state;
     char            *construct;
     size_t          constru;
-}              t_infos;
+}              infos_t;
 
 typedef struct s_help
 {
     char *cmd;
     char *msg;
-}              t_help;
+}              help_t;
 
 typedef struct s_cmd
 {
     char *cmd;
-    void (*pointer)(t_infos *, char **);
-}              t_cmd;
+    void (*pointer)(infos_t *, char **);
+}              cmd_t;
 
 typedef struct s_reply
 {
     int  code;
     char *reply;
-}              t_reply;
+}              reply_t;
 
+// Utils
+int add_node(infos_t **, SOCKET, SOCKADDR_IN, char *);
+int delete_node(infos_t **, infos_t *, fd_set *);
+
+// Commands
+int analyse_and_exec_command(infos_t **, infos_t *, char **, fd_set *);
+void password(infos_t *, char **);
+void help(infos_t *, char **);
+void user(infos_t *, char **);
+void noop(infos_t *, char **);
+void cdup(infos_t *, char **);
+void pwd(infos_t *, char **);
+void cwd(infos_t *, char **);
+void pasv(infos_t *, char **);
+void stor(infos_t *, char **);
+
+// Miscellaneous
 char **my_str_to_wordtab(char *);
 void send_reply(SOCKET, int);
 SOCKET init_socket(int);
 int loop(char **);
-
-// Utils
-int add_node(t_infos **, SOCKET, SOCKADDR_IN, char *);
-int delete_node(t_infos **, t_infos *, fd_set *);
-
-// Commands
-void password(t_infos *, char **);
-void help(t_infos *, char **);
-void user(t_infos *, char **);
-void noop(t_infos *, char **);
-void cdup(t_infos *, char **);
-void pwd(t_infos *, char **);
-void cwd(t_infos *, char **);
-void pasv(t_infos *, char **);
-void stor(t_infos *, char **);
 
 #endif /* !SERVER_H_ */

@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void user(t_infos *infos, char **cmd)
+void user(infos_t *infos, char **cmd)
 {
     if (cmd[1] == NULL)
         send_reply(infos->csock, 504);
@@ -24,7 +24,7 @@ void user(t_infos *infos, char **cmd)
     }
 }
 
-void password(t_infos *infos, char **cmd)
+void password(infos_t *infos, char **cmd)
 {
     if (cmd[1] != NULL && strcmp(cmd[1], " ") != 0)
         if (cmd[2] != NULL)

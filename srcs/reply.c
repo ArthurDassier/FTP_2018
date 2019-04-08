@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-static t_reply replies_tab[] =
+static reply_t replies_tab[] =
 {
     {550, "File or directory doesn't exist.\r\n"},
     {530, "Please login with USER and PASS.\r\n"},

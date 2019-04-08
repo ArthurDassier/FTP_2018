@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void stor_two(t_infos *infos, char **cmd)
+void stor_two(infos_t *infos, char **cmd)
 {
     char    boeuf[1];
     int     file_open;
@@ -24,7 +24,7 @@ void stor_two(t_infos *infos, char **cmd)
     infos->state = NORMAL;
 }
 
-void stor(t_infos *infos, char **cmd)
+void stor(infos_t *infos, char **cmd)
 {
     if (infos->user == NOT_LOGGED || infos->pwd == false) {
         send_reply(infos->csock, 530);

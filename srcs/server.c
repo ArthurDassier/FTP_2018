@@ -5,70 +5,46 @@
 ** server
 */
 
+#include <signal.h>
 #include "server.h"
 
-static t_cmd cmd_table[] =
+int format_command(infos_t **list, infos_t *infos, fd_set *active_fd_set)
 {
-    {"HELP", &help},
-    {"USER", &user},
-    {"PASS", &password},
-    {"NOOP", &noop},
-    {"PWD", &pwd},
-    {"CDUP", &cdup},
-    {"CWD", &cwd},
-    {"PASV", &pasv},
-    {"STOR", &stor}
-};
+    char    **tab_cmd = NULL;
+    char    command[4096];
+    int     size = 0;
 
-int exec_command(t_infos **list, t_infos *infos, fd_set *active_fd_set)
-{
-    char            **tab_cmd = NULL;
-    int             size = 0;
-    unsigned int    i = 0;
-    char            command[4096];
-
-    (void) list;
-    (void) active_fd_set;
     if (infos == NULL || command == NULL)
         return (84);
     size = read(infos->csock, command, 4096);
     if (size == -1)
         return (84);
-    if (strcmp(command, "\r\n") == 0 || strcmp(command, "\r") == 0
+    if (size < 3 || strcmp(command, "\r\n") == 0 || strcmp(command, "\r") == 0
     || strcmp(command, "\n") == 0)
         return (0);
+    command[size] = '\0';
     tab_cmd = my_str_to_wordtab(command);
-    for (i = 0; i < ARRAY_SIZE(cmd_table); ++i) {
-        if (strncasecmp(tab_cmd[0], cmd_table[i].cmd, 4) == 0) {
-            cmd_table[i].pointer(infos, tab_cmd);
-            break;
-        }
-    }
-    // if (strcmp(tab_cmd[0], "QUIT") == 0) {
-    //     if (delete_node(list, infos, active_fd_set) == 84)
-    //         return (84);
-    // } else
-    if (i == ARRAY_SIZE(cmd_table))
-        send_reply(infos->csock, 500);
-    free(tab_cmd);
-    for (int i = 0; i < 4096; ++i)
+    if (analyse_and_exec_command(list, infos, tab_cmd, active_fd_set) == 84)
+        return (84);
+    for (size_t i = 0; i < 4096; ++i)
         command[i] = '\0';
+    free(tab_cmd);
     return (0);
 }
 
-static int check_fd_is_set(t_infos **infos,
+static int check_fd_is_set(infos_t **infos,
 fd_set *active_fd_set, fd_set read_fd_set)
 {
-    t_infos *infos_tmp = (*infos);
+    infos_t *infos_tmp = (*infos);
 
     while (infos_tmp != NULL && !(FD_ISSET(infos_tmp->csock, &read_fd_set)))
         infos_tmp = infos_tmp->next;
     if (infos_tmp != NULL)
-        exec_command(infos, infos_tmp, active_fd_set);
+        format_command(infos, infos_tmp, active_fd_set);
     return (0);
 }
 
-static int new_connection(SOCKET sock, t_infos **infos,
+static int new_connection(SOCKET sock, infos_t **infos,
 fd_set *fdst, char *path)
 {
     SOCKET          csock;
@@ -83,7 +59,7 @@ fd_set *fdst, char *path)
     return (0);
 }
 
-static int select_management(SOCKET sock, t_infos **infos,
+static int select_management(SOCKET sock, infos_t **infos,
 fd_set *active_fd_set, char *path)
 {
     fd_set read_fd_set = *active_fd_set;
@@ -105,7 +81,7 @@ int loop(char **av)
 {
     SOCKET     sock = init_socket(atoi(av[1]));
     fd_set     active_fd_set;
-    t_infos    *infos = NULL;
+    infos_t    *infos = NULL;
 
     FD_ZERO(&active_fd_set);
     FD_SET(sock, &active_fd_set);
