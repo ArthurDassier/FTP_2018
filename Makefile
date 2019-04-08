@@ -19,6 +19,7 @@ SRCS	=	srcs/main.c					\
 			srcs/utils.c				\
 			srcs/server.c				\
 			srcs/help.c					\
+			srcs/list.c					\
 			srcs/passive.c				\
 			srcs/commands.c				\
 			srcs/init.c					\

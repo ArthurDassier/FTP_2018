@@ -89,6 +89,7 @@ void pwd(infos_t *, char **);
 void cwd(infos_t *, char **);
 void pasv(infos_t *, char **);
 void stor(infos_t *, char **);
+void list(infos_t *, char **);
 
 // Miscellaneous
 char **my_str_to_wordtab(char *);

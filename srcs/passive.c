@@ -35,16 +35,15 @@ static void passive_mode(infos_t *infos, __attribute__((unused)) char **cmd)
         return;
     if (listen(psock, 5) == -1)
         return;
-    infos->psock = accept(psock, (SOCKADDR*)&sin, &recsize);
     server_reply(infos, ip, port1, port2);
 }
 
 void pasv(infos_t *infos, __attribute__((unused)) char **cmd)
 {
-    if (cmd[1] != NULL)
-        send_reply(infos->csock, 504);
-    else if (infos->user == NOT_LOGGED || infos->pwd == false)
+    if (infos->user == NOT_LOGGED || infos->pwd == false)
         send_reply(infos->csock, 530);
+    else if (cmd[1] != NULL)
+        send_reply(infos->csock, 504);
     else
         passive_mode(infos, cmd);
 }
