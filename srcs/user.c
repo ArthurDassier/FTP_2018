@@ -26,15 +26,18 @@ void user(infos_t *infos, char **cmd)
 
 void password(infos_t *infos, char **cmd)
 {
-    if (cmd[1] != NULL && strcmp(cmd[1], " ") != 0)
-        if (cmd[2] != NULL)
+    if (cmd[1] != NULL) {
+        if (strcmp(cmd[1], "\r\n") == 0) {
+            send_reply(infos->csock, 230);
+            infos->pwd = true;
+        } else if (cmd[2] != NULL)
             send_reply(infos->csock, 504);
         else
             send_reply(infos->csock, 530);
-    else {
-        if (infos->user == NOT_LOGGED) {
+    } else {
+        if (infos->user == NOT_LOGGED)
             send_reply(infos->csock, 503);
-        } else if (infos->user == KNOW) {
+        else if (infos->user == KNOW) {
             send_reply(infos->csock, 230);
             infos->pwd = true;
         } else

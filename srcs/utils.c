@@ -33,21 +33,12 @@ int add_node(infos_t **basic, SOCKET csock, SOCKADDR_IN csin, char *home)
 
 int delete_node(infos_t **infos, infos_t *to_delete, fd_set *active_fd_set)
 {
-    infos_t *tmp = (*infos);
-
-    if (tmp == NULL)
-        return (84);
-    while (tmp->next != NULL) {
-        if (tmp->csock == to_delete->csock)
-            break;
-        tmp = tmp->next;
-    }
+    sleep(1);
     send_reply(to_delete->csock, 221);
+    sleep(1);
     FD_CLR(to_delete->csock, active_fd_set);
+    sleep(1);
     close(to_delete->csock);
-    if (to_delete->next != NULL) {
-        tmp = to_delete->next;
-        free(to_delete);
-    }
+    to_delete->csock = -1;
     return (0);
 }
