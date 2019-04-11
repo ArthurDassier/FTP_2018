@@ -31,14 +31,11 @@ int add_node(infos_t **basic, SOCKET csock, SOCKADDR_IN csin, char *home)
     return (0);
 }
 
-int delete_node(infos_t **infos, infos_t *to_delete, fd_set *active_fd_set)
+int delete_node(__attribute__((unused)) infos_t **infos, infos_t *to_delete,
+fd_set *active_fd_set)
 {
-    sleep(1);
     send_reply(to_delete->csock, 221);
-    sleep(1);
     FD_CLR(to_delete->csock, active_fd_set);
-    sleep(1);
-    close(to_delete->csock);
     to_delete->csock = -1;
     return (0);
 }

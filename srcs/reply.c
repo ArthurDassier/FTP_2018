@@ -27,7 +27,7 @@ static reply_t replies_tab[] =
     {226, "Closing data connection.\r\n"},
     {221, "Service closing control connection.\r\n"},
     {220, "Service ready for new user.\r\n"},
-    {214, "Help message.\r\n"},
+    {214, "Help okay.\r\n"},
     {200, "Command okay.\r\n"},
     {150, "File status okay; about to open data connection.\r\n"},
     {125, "Data connection already open; transfer starting.\r\n"}

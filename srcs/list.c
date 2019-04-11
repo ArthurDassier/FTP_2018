@@ -34,13 +34,19 @@ void list(infos_t *infos, char **cmd)
 {
     pid_t child_pid;
 
-    if (infos->user == NOT_LOGGED || infos->pwd == false)
+    if (infos->user == NOT_LOGGED || infos->pwd == false) {
         send_reply(infos->csock, 530);
-    else if (cmd[1] != NULL && cmd[2] != NULL)
-        send_reply(infos->csock, 504);
-    else {
-        child_pid = fork();
-        if (child_pid == 0)
-            list_two(infos, cmd);
+        return;
     }
+    if (cmd[1] != NULL && cmd[2] != NULL) {
+        send_reply(infos->csock, 504);
+        return;
+    }
+    if (infos->state == NORMAL) {
+        send_reply(infos->csock, 425);
+        return;
+    }
+    child_pid = fork();
+    if (child_pid == 0)
+        list_two(infos, cmd);
 }

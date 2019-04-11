@@ -44,3 +44,20 @@ void password(infos_t *infos, char **cmd)
             send_reply(infos->csock, 530);
     }
 }
+
+void port(infos_t *infos, char **cmd)
+{
+    if (infos->user == NOT_LOGGED || infos->pwd == false) {
+        send_reply(infos->csock, 530);
+        return;
+    }
+    if (cmd[1] == NULL) {
+        send_reply(infos->csock, 504);
+        return;
+    }
+    if (cmd[2] != NULL) {
+        send_reply(infos->csock, 504);
+        return;
+    }
+    send_reply(infos->csock, 200);
+}

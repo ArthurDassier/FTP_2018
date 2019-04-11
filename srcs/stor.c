@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-void stor_two(infos_t *infos, char **cmd)
+static void stor_two(infos_t *infos, char **cmd)
 {
     char    boeuf[1];
     int     file_open = open(cmd[1], O_CREAT | O_TRUNC | O_RDWR, 0666);
@@ -39,7 +39,20 @@ void stor(infos_t *infos, char **cmd)
         send_reply(infos->csock, 504);
         return;
     }
+    if (infos->state == NORMAL) {
+        send_reply(infos->csock, 425);
+        return;
+    }
     child_pid = fork();
     if (child_pid == 0)
         stor_two(infos, cmd);
+}
+
+void dele(infos_t *infos, __attribute__((unused)) char **cmd)
+{
+    if (infos->user == NOT_LOGGED || infos->pwd == false) {
+        send_reply(infos->csock, 530);
+        return;
+    }
+    send_reply(infos->csock, 250);
 }
