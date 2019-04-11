@@ -51,11 +51,7 @@ void port(infos_t *infos, char **cmd)
         send_reply(infos->csock, 530);
         return;
     }
-    if (cmd[1] == NULL) {
-        send_reply(infos->csock, 504);
-        return;
-    }
-    if (cmd[2] != NULL) {
+    if (cmd[1] == NULL || cmd[2] != NULL) {
         send_reply(infos->csock, 504);
         return;
     }
