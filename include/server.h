@@ -92,6 +92,7 @@ void stor(infos_t *, char **);
 void list(infos_t *, char **);
 void retr(infos_t *, char **);
 void dele(infos_t *, char **);
+void port(infos_t *, char **);
 
 // Miscellaneous
 char **my_str_to_wordtab(char *);
