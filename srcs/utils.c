@@ -7,7 +7,7 @@
 
 #include "server.h"
 
-int add_node(infos_t **basic, SOCKET csock, SOCKADDR_IN csin, char *home)
+int add_node(infos_t **basic, int_socket csock, sockaddr_in_t csin, char *home)
 {
     infos_t *infos = malloc(sizeof(infos_t));
     infos_t *tmp = (*basic);

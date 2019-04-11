@@ -44,14 +44,14 @@ fd_set *active_fd_set, fd_set read_fd_set)
     return (0);
 }
 
-static int new_connection(SOCKET sock, infos_t **infos,
+static int new_connection(int_socket sock, infos_t **infos,
 fd_set *fdst, char *path)
 {
-    SOCKET          csock;
-    SOCKADDR_IN     csin;
+    int_socket          csock;
+    sockaddr_in_t     csin;
     socklen_t       crecsize = sizeof(csin);
 
-    csock = accept(sock, (SOCKADDR*)&csin, &crecsize);
+    csock = accept(sock, (sockaddr_t*)&csin, &crecsize);
     send_reply(csock, 220);
     FD_SET(csock, fdst);
     if (add_node(infos, csock, csin, path) == 84)
@@ -59,7 +59,7 @@ fd_set *fdst, char *path)
     return (0);
 }
 
-static int select_management(SOCKET sock, infos_t **infos,
+static int select_management(int_socket sock, infos_t **infos,
 fd_set *active_fd_set, char *path)
 {
     fd_set read_fd_set = *active_fd_set;
@@ -79,7 +79,7 @@ fd_set *active_fd_set, char *path)
 
 int loop(char **av)
 {
-    SOCKET     sock = init_socket(atoi(av[1]));
+    int_socket     sock = init_socket(atoi(av[1]));
     fd_set     active_fd_set;
     infos_t    *infos = NULL;
 

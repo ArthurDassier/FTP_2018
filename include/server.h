@@ -22,9 +22,9 @@
 #include <string.h>
 #include <stdbool.h>
 
-typedef struct sockaddr_in SOCKADDR_IN;
-typedef struct sockaddr SOCKADDR;
-typedef int SOCKET;
+typedef struct sockaddr_in sockaddr_in_t;
+typedef struct sockaddr sockaddr_t;
+typedef int int_socket;
 
 #define ARRAY_SIZE(array) sizeof(array) / sizeof(*array)
 
@@ -44,9 +44,9 @@ enum state
 
 typedef struct s_infos
 {
-    SOCKET          csock;
-    SOCKET          psock;
-    SOCKADDR_IN     csin;
+    int_socket          csock;
+    int_socket          psock;
+    sockaddr_in_t     csin;
     int             user;
     bool            pwd;
     char           *home;
@@ -75,7 +75,7 @@ typedef struct s_reply
 }              reply_t;
 
 // Utils
-int add_node(infos_t **, SOCKET, SOCKADDR_IN, char *);
+int add_node(infos_t **, int_socket, sockaddr_in_t, char *);
 int delete_node(infos_t **, infos_t *, fd_set *);
 
 // Commands
@@ -95,8 +95,8 @@ void dele(infos_t *, char **);
 
 // Miscellaneous
 char **my_str_to_wordtab(char *);
-void send_reply(SOCKET, int);
-SOCKET init_socket(int);
+void send_reply(int_socket, int);
+int_socket init_socket(int);
 int loop(char **);
 
 #endif /* !SERVER_H_ */

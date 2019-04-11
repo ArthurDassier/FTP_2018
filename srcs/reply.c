@@ -33,7 +33,7 @@ static reply_t replies_tab[] =
     {125, "Data connection already open; transfer starting.\r\n"}
 };
 
-void send_reply(SOCKET csock, int code)
+void send_reply(int_socket csock, int code)
 {
     for (int i = 0; i != ARRAY_SIZE(replies_tab); ++i) {
         if (code == replies_tab[i].code) {

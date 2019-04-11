@@ -7,9 +7,9 @@
 
 #include "server.h"
 
-static SOCKADDR_IN init_sock_addr(int port)
+static sockaddr_in_t init_sock_addr(int port)
 {
-    SOCKADDR_IN     sin;
+    sockaddr_in_t     sin;
 
     sin.sin_addr.s_addr = htonl(INADDR_ANY);
     sin.sin_family = AF_INET;
@@ -17,18 +17,18 @@ static SOCKADDR_IN init_sock_addr(int port)
     return (sin);
 }
 
-SOCKET init_socket(int port)
+int_socket init_socket(int port)
 {
-    SOCKADDR_IN     sin;
+    sockaddr_in_t     sin;
     socklen_t       recsize = sizeof(sin);
-    SOCKET          sock = socket(AF_INET, SOCK_STREAM, 0);
+    int_socket          sock = socket(AF_INET, SOCK_STREAM, 0);
 
     if (sock == -1) {
         perror("Error on socket");
         return (84);
     }
     sin = init_sock_addr(port);
-    if (bind(sock, (SOCKADDR*)&sin, recsize) == -1) {
+    if (bind(sock, (sockaddr_t*)&sin, recsize) == -1) {
         perror("Error on bind");
         return (84);
     }

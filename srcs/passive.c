@@ -21,9 +21,9 @@ static void server_reply(infos_t *infos, char *ip, int port1, int port2)
 
 static void passive_mode(infos_t *infos, __attribute__((unused)) char **cmd)
 {
-    SOCKADDR_IN     sin = infos->csin;
+    sockaddr_in_t     sin = infos->csin;
     socklen_t       recsize = sizeof(sin);
-    SOCKET          psock = socket(AF_INET, SOCK_STREAM, 0);
+    int_socket          psock = socket(AF_INET, SOCK_STREAM, 0);
     char            *ip = inet_ntoa(infos->csin.sin_addr);
     int             port1 = ((random() % 255) * 256);
     int             port2 = (random() % 255);
@@ -31,7 +31,7 @@ static void passive_mode(infos_t *infos, __attribute__((unused)) char **cmd)
     sin.sin_port = port1 + port2;
     if (psock == -1)
         return;
-    if (bind(psock, (SOCKADDR*)&sin, recsize) == -1)
+    if (bind(psock, (sockaddr_t*)&sin, recsize) == -1)
         return;
     if (listen(psock, 5) == -1)
         return;
