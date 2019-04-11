@@ -36,6 +36,7 @@ fd_set *active_fd_set)
 {
     send_reply(to_delete->csock, 221);
     FD_CLR(to_delete->csock, active_fd_set);
+    close(to_delete->csock);
     to_delete->csock = -1;
     return (0);
 }
