@@ -46,9 +46,8 @@ void stor(infos_t *infos, char **cmd)
 
 void dele(infos_t *infos, __attribute__((unused)) char **cmd)
 {
-    if (infos->user == NOT_LOGGED || infos->pwd == false) {
+    if (infos->user == NOT_LOGGED || infos->pwd == false)
         send_reply(infos->csock, 530);
-        return;
-    }
-    send_reply(infos->csock, 250);
+    else
+        send_reply(infos->csock, 250);
 }

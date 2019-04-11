@@ -9,18 +9,15 @@
 
 void user(infos_t *infos, char **cmd)
 {
-    if (cmd[1] == NULL)
+    if (cmd[1] == NULL || cmd[2] != NULL) {
         send_reply(infos->csock, 504);
-    else if (cmd[2] != NULL)
-        send_reply(infos->csock, 504);
-    else {
-        if (strcmp(cmd[1], "Anonymous") == 0) {
-            send_reply(infos->csock, 331);
-            infos->user = KNOW;
-        } else {
-            send_reply(infos->csock, 331);
-            infos->user = UNKNOW;
-        }
+        return;
+    } else if (strcmp(cmd[1], "Anonymous") == 0) {
+        send_reply(infos->csock, 331);
+        infos->user = KNOW;
+    } else {
+        send_reply(infos->csock, 331);
+        infos->user = UNKNOW;
     }
 }
 
@@ -47,13 +44,10 @@ void password(infos_t *infos, char **cmd)
 
 void port(infos_t *infos, char **cmd)
 {
-    if (infos->user == NOT_LOGGED || infos->pwd == false) {
+    if (infos->user == NOT_LOGGED || infos->pwd == false)
         send_reply(infos->csock, 530);
-        return;
-    }
-    if (cmd[1] == NULL || cmd[2] != NULL) {
+    else if (cmd[1] == NULL || cmd[2] != NULL)
         send_reply(infos->csock, 504);
-        return;
-    }
-    send_reply(infos->csock, 200);
+    else
+        send_reply(infos->csock, 200);
 }
