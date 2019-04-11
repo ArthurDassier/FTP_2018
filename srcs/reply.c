@@ -14,7 +14,6 @@ static reply_t replies_tab[] =
     {504, "Command not implemented for that parameter.\r\n"},
     {503, "Login with USER first.\r\n"},
     {500, "Unknown command.\r\n"},
-    {120, "Service ready in x minutes.\r\n"},
     {451, "Requested action aborted. Local error in processing.\r\n"},
     {430, "Invalid username or password.\r\n"},
     {425, "Use PORT or PASV first.\r\n"},
@@ -30,7 +29,8 @@ static reply_t replies_tab[] =
     {214, "Help okay.\r\n"},
     {200, "Command okay.\r\n"},
     {150, "File status okay; about to open data connection.\r\n"},
-    {125, "Data connection already open; transfer starting.\r\n"}
+    {125, "Data connection already open; transfer starting.\r\n"},
+    {120, "Service ready in x minutes.\r\n"}
 };
 
 void send_reply(int_socket csock, int code)

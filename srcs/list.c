@@ -12,9 +12,9 @@ static void list_two(infos_t *infos, char **cmd)
 {
     struct dirent   *file = NULL;
     DIR             *directory = NULL;
-    int             fd = accept(infos->csock, NULL, NULL);
+    int             fd = accept(infos->psock, NULL, NULL);
 
-    send_reply(infos->csock, 150);
+    dprintf(fd, "150 ");
     if (cmd[1] != NULL)
         directory = opendir(cmd[1]);
     else
@@ -25,6 +25,7 @@ static void list_two(infos_t *infos, char **cmd)
         if (file->d_name[0] != '.')
             dprintf(fd, "%s\n", file->d_name);
     }
+    dprintf(fd, "\r\n");
     closedir(directory);
     send_reply(infos->csock, 226);
     exit(0);
