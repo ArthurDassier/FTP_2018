@@ -47,8 +47,8 @@ fd_set *active_fd_set, fd_set read_fd_set)
 static int new_connection(int_socket sock, infos_t **infos,
 fd_set *fdst, char *path)
 {
-    int_socket          csock;
-    sockaddr_in_t     csin;
+    int_socket      csock;
+    sockaddr_in_t   csin;
     socklen_t       crecsize = sizeof(csin);
 
     csock = accept(sock, (sockaddr_t*)&csin, &crecsize);
@@ -79,9 +79,9 @@ fd_set *active_fd_set, char *path)
 
 int loop(char **av)
 {
-    int_socket     sock = init_socket(atoi(av[1]));
-    fd_set     active_fd_set;
-    infos_t    *infos = NULL;
+    int_socket  sock = init_socket(atoi(av[1]));
+    fd_set      active_fd_set;
+    infos_t     *infos = NULL;
 
     FD_ZERO(&active_fd_set);
     FD_SET(sock, &active_fd_set);

@@ -9,9 +9,9 @@
 
 void retr_two(infos_t *infos, char **cmd)
 {
-    FILE *file;
-    int fd;
-    char c = '\0';
+    FILE    *file;
+    int     fd;
+    char    c = '\0';
 
     file = fopen(cmd[1], "r");
     if (!file) {

@@ -46,14 +46,14 @@ typedef struct s_infos
 {
     int_socket          csock;
     int_socket          psock;
-    sockaddr_in_t     csin;
-    int             user;
-    bool            pwd;
-    char           *home;
-    struct s_infos *next;
-    int            state;
-    char            *construct;
-    size_t          constru;
+    sockaddr_in_t       csin;
+    int                 user;
+    bool                pwd;
+    char                *home;
+    struct s_infos      *next;
+    int                 state;
+    char                *construct;
+    size_t              constru;
 }              infos_t;
 
 typedef struct s_help

@@ -19,9 +19,9 @@ static sockaddr_in_t init_sock_addr(int port)
 
 int_socket init_socket(int port)
 {
-    sockaddr_in_t     sin;
+    sockaddr_in_t   sin;
     socklen_t       recsize = sizeof(sin);
-    int_socket          sock = socket(AF_INET, SOCK_STREAM, 0);
+    int_socket      sock = socket(AF_INET, SOCK_STREAM, 0);
 
     if (sock == -1) {
         perror("Error on socket");
