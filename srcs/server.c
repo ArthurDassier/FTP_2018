@@ -5,11 +5,11 @@
 ** server
 */
 
-#include <signal.h>
 #include <time.h>
 #include "server.h"
 
-int format_command(infos_t **list, infos_t *infos, fd_set *active_fd_set)
+static int format_command(infos_t **list, infos_t *infos,
+fd_set *active_fd_set)
 {
     char    **tab_cmd = NULL;
     char    command[4096];

@@ -8,7 +8,7 @@
 #include <dirent.h>
 #include "server.h"
 
-static void list_two(infos_t *infos, char **cmd)
+static void list_fork(infos_t *infos, char **cmd)
 {
     struct dirent   *file = NULL;
     DIR             *directory = NULL;
@@ -49,5 +49,5 @@ void list(infos_t *infos, char **cmd)
     }
     child_pid = fork();
     if (child_pid == 0)
-        list_two(infos, cmd);
+        list_fork(infos, cmd);
 }

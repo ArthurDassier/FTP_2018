@@ -35,10 +35,14 @@ static reply_t replies_tab[] =
 
 void send_reply(int_socket csock, int code)
 {
-    for (int i = 0; i != ARRAY_SIZE(replies_tab); ++i) {
+    int i = 0;
+
+    while (i != ARRAY_SIZE(replies_tab)) {
         if (code == replies_tab[i].code) {
             dprintf(csock, "%d %s", replies_tab[i].code,
             replies_tab[i].reply);
+            return;
         }
+        ++i;
     }
 }

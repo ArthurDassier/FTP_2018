@@ -7,12 +7,13 @@
 
 #include "server.h"
 
-static void stor_two(infos_t *infos, char **cmd)
+static void stor_fork(infos_t *infos, char **cmd)
 {
     char    boeuf[1];
     int     file_open = creat(cmd[1], 0666);
     int     fd_write = accept(infos->psock, NULL, NULL);
 
+    infos->state = NORMAL;
     if (file_open == -1) {
         close(infos->psock);
         send_reply(infos->csock, 451);
@@ -25,7 +26,6 @@ static void stor_two(infos_t *infos, char **cmd)
     send_reply(infos->csock, 226);
     close(file_open);
     close(infos->psock);
-    infos->state = NORMAL;
     exit(0);
 }
 
@@ -47,7 +47,7 @@ void stor(infos_t *infos, char **cmd)
     }
     child_pid = fork();
     if (child_pid == 0)
-        stor_two(infos, cmd);
+        stor_fork(infos, cmd);
 }
 
 void dele(infos_t *infos, __attribute__((unused)) char **cmd)

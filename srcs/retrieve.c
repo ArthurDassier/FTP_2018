@@ -7,24 +7,27 @@
 
 #include "server.h"
 
-void retr_two(infos_t *infos, char **cmd)
+static void retr_fork(infos_t *infos, char **cmd)
 {
     FILE    *file;
-    int     fd;
+    int     fd = accept(infos->psock, NULL, NULL);
     char    c = '\0';
 
+    infos->state = NORMAL;
     file = fopen(cmd[1], "r");
     if (!file) {
         send_reply(infos->csock, 550);
-        return;
+        exit(0);
     }
-    fd = accept(infos->psock, NULL, NULL);
+    if (fd == -1) {
+        send_reply(infos->csock, 451);
+        exit(0);
+    }
     while ((c = fgetc(file)) != EOF)
         dprintf(fd, "%c", c);
     send_reply(infos->csock, 226);
     close(fd);
     close(infos->psock);
-    infos->state = NORMAL;
     exit(0);
 }
 
@@ -45,5 +48,5 @@ void retr(infos_t *infos, char **cmd)
     }
     child_pid = fork();
     if (child_pid == 0)
-        retr_two(infos, cmd);
+        retr_fork(infos, cmd);
 }
