@@ -19,6 +19,7 @@ static void stor_two(infos_t *infos, char **cmd)
         infos->state = NORMAL;
         exit(0);
     }
+    send_reply(infos->csock, 150);
     while (read(fd_write, boeuf, 1) > 0)
         write(file_open, boeuf, 1);
     send_reply(infos->csock, 226);
