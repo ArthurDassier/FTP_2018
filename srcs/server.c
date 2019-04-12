@@ -6,6 +6,7 @@
 */
 
 #include <signal.h>
+#include <time.h>
 #include "server.h"
 
 int format_command(infos_t **list, infos_t *infos, fd_set *active_fd_set)
@@ -83,6 +84,7 @@ int loop(char **av)
     fd_set      active_fd_set;
     infos_t     *infos = NULL;
 
+    srandom(time(NULL));
     FD_ZERO(&active_fd_set);
     FD_SET(sock, &active_fd_set);
     if (sock == 84)

@@ -10,9 +10,15 @@
 static void stor_two(infos_t *infos, char **cmd)
 {
     char    boeuf[1];
-    int     file_open = open(cmd[1], O_CREAT | O_TRUNC | O_RDWR, 0666);
-    int     fd_write = accept(infos->csock, NULL, NULL);
+    int     file_open = creat(cmd[1], 0666);
+    int     fd_write = accept(infos->psock, NULL, NULL);
 
+    if (file_open == -1) {
+        close(infos->psock);
+        send_reply(infos->csock, 451);
+        infos->state = NORMAL;
+        exit(0);
+    }
     while (read(fd_write, boeuf, 1) > 0)
         write(file_open, boeuf, 1);
     send_reply(infos->csock, 226);
