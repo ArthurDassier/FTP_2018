@@ -1,4 +1,4 @@
-norminette.py
+*.py
 *.o
 *.a
 .vscode
