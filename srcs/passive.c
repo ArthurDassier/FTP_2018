@@ -38,7 +38,7 @@ static void passive_mode(infos_t *infos, __attribute__((unused)) char **cmd)
     server_reply(infos, ip, port1, port2);
 }
 
-void pasv(infos_t *infos, __attribute__((unused)) char **cmd)
+void pasv(infos_t *infos, char **cmd)
 {
     if (infos->user == NOT_LOGGED || infos->pwd == false)
         send_reply(infos->csock, 530);
