@@ -48,6 +48,8 @@ void port(infos_t *infos, char **cmd)
         send_reply(infos->csock, 530);
     else if (cmd[1] == NULL || cmd[2] != NULL)
         send_reply(infos->csock, 504);
-    else
+    else {
         send_reply(infos->csock, 200);
+        infos->state = ACTIVE;
+    }
 }
